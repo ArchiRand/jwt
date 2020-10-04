@@ -9,7 +9,7 @@ public interface UserService {
 
     List<User> getAll();
 
-    Optional<User> findByLogin(String name);
+    Optional<User> findByLogin(String login);
 
     Optional<User> findById(Long id);
 }
