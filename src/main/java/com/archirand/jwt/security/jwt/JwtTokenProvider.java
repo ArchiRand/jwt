@@ -43,7 +43,6 @@ public class JwtTokenProvider {
     }
 
     public String token(String login, List<Role> roles) {
-        // Разобраться что это такое и для чего оно
         Claims claims = Jwts.claims().setSubject(login);
         claims.put("roles", roles);
 
@@ -59,11 +58,11 @@ public class JwtTokenProvider {
     }
 
     public Authentication authentication(String token) {
-        UserDetails userDetails = userDetailsService.loadUserByUsername(login(token));
+        UserDetails userDetails = userDetailsService.loadUserByUsername(userLoginFromToken(token));
         return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
     }
 
-    public String login(String token) {
+    public String userLoginFromToken(String token) {
         return Jwts.parser()
                 .setSigningKey(secret)
                 .parseClaimsJws(token)
