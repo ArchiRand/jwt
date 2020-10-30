@@ -5,7 +5,9 @@ import lombok.EqualsAndHashCode;
 
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class UserContact extends BaseEntity{
+public class UserContact extends BaseEntity {
+
+    private static final long serialVersionUID = 4234966065842857577L;
 
     private User user;
 

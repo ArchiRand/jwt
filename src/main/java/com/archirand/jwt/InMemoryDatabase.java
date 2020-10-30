@@ -36,7 +36,7 @@ public final class InMemoryDatabase {
 
     public void createUsersAndRoles(int amount, PasswordEncoder passwordEncoder) {
         users.addAll(PseudoEntityFactory.createUsers(amount, passwordEncoder));
-        roles.addAll(PseudoEntityFactory.createRoles("USER", "ADMIN", "UNKNOWN"));
+        roles.addAll(PseudoEntityFactory.createRoles("ROLE_USER", "ROLE_ADMIN", "ROLE_UNKNOWN"));
         PseudoEntityFactory.linkUserWithRoles(users, roles);
     }
 

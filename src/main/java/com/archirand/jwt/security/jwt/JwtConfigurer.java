@@ -19,11 +19,3 @@ public class JwtConfigurer extends SecurityConfigurerAdapter<DefaultSecurityFilt
         builder.addFilterBefore(jwtTokenFilter, UsernamePasswordAuthenticationFilter.class);
     }
 }
-
-/*
-    Что здесь происходит:
-        Наш секьюрити сконфигурирован таким образом, что каждый запрос,
-        перед тек как быть передан дальше на сервер, должен пройти проверку
-        через JwtTokenFilter на то, что он впринципе есть в заголовке и если
-        есть - валиден и не истек
- */

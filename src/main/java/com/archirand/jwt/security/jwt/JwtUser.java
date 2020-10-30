@@ -12,6 +12,9 @@ import java.util.List;
 
 @Getter
 public class JwtUser implements UserDetails {
+
+    private static final long serialVersionUID = 1447791531607998915L;
+
     @JsonIgnore
     private final Long id;
     private final String firstName;

@@ -3,7 +3,6 @@ package com.archirand.jwt.security.jwt;
 import com.archirand.jwt.model.Role;
 import com.archirand.jwt.security.jwt.exception.JwtAuthenticationException;
 import io.jsonwebtoken.*;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -23,14 +22,18 @@ import java.util.stream.Collectors;
 @Component
 public class JwtTokenProvider {
 
-    @Autowired
-    private UserDetailsService userDetailsService;
+    private final UserDetailsService userDetailsService;
+
+    public JwtTokenProvider(UserDetailsService userDetailsService) {
+        this.userDetailsService = userDetailsService;
+    }
+
     // Секретное слово, на основании которого мы будем шифровать и расшифровывать токен
-    @Value("${jwt.token.secret")
+    @Value("${jwt.token.secret}")
     private String secret;
     // Количество миллисикунд, которое должно пройти до того, как токен истечет
-    @Value("${jwt.token.expired")
-    private Long expiredInMilliseconds;
+    @Value("${jwt.token.expired}")
+    private String expiredInMilliseconds;
 
     @PostConstruct
     private void postConstruct() {
@@ -44,10 +47,10 @@ public class JwtTokenProvider {
 
     public String token(String login, List<Role> roles) {
         Claims claims = Jwts.claims().setSubject(login);
-        claims.put("roles", roles);
+        claims.put("roles", roleNames(roles));
 
         Date now = new Date();
-        Date expireIn = new Date(now.getTime() + expiredInMilliseconds);
+        Date expireIn = new Date(now.getTime() + Long.parseLong(expiredInMilliseconds));
 
         return Jwts.builder()
                 .setClaims(claims)
@@ -73,7 +76,8 @@ public class JwtTokenProvider {
     public boolean validateToken(String token) {
         try {
             Jws<Claims> claims = Jwts.parser().setSigningKey(secret).parseClaimsJws(token);
-            return claims.getBody().getExpiration().before(new Date());
+            Date now = new Date();
+            return now.before(claims.getBody().getExpiration());
         } catch (JwtException exception) {
             throw new JwtAuthenticationException("JWT token is expired or invalid", exception);
         }

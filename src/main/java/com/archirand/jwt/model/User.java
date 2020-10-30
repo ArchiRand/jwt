@@ -10,6 +10,8 @@ import java.util.List;
 @EqualsAndHashCode(callSuper = true)
 public class User extends BaseEntity {
 
+    private static final long serialVersionUID = 7356990944177713077L;
+
     private String name;
 
     private String lastName;

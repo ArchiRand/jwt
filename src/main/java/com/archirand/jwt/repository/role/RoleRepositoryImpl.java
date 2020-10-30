@@ -4,11 +4,13 @@ import com.archirand.jwt.InMemoryDatabase;
 import com.archirand.jwt.model.Role;
 import com.archirand.jwt.model.User;
 import lombok.NonNull;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+@Component
 public class RoleRepositoryImpl implements RoleRepository {
 
     @Override

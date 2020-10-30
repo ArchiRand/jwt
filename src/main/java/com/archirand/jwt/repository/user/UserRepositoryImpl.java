@@ -3,10 +3,12 @@ package com.archirand.jwt.repository.user;
 import com.archirand.jwt.InMemoryDatabase;
 import com.archirand.jwt.model.User;
 import lombok.NonNull;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Optional;
 
+@Component
 public class UserRepositoryImpl implements UserRepository {
 
     @Override
@@ -19,7 +21,7 @@ public class UserRepositoryImpl implements UserRepository {
         return InMemoryDatabase.instance()
                 .getUsers()
                 .stream()
-                .filter(user -> user.getName().toUpperCase().equals(login.toUpperCase()))
+                .filter(user -> user.getLogin().toUpperCase().equals(login.toUpperCase()))
                 .findFirst();
     }
 

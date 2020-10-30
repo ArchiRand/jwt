@@ -25,8 +25,9 @@ public class PseudoEntityFactory {
             user.setPassword(passwordEncoder.encode("password_" + id));
             user.setName("Test_" + id);
             user.setLastName("Testovich_" + id);
+            user.setStatus(Status.ACTIVE);
 
-            defineUserStatus(user, id);
+//            defineUserStatus(user, id);
 
             createUserContactAndLinkWithUser(user, id);
 
